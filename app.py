@@ -41,7 +41,8 @@ def shift_cipher():
 @app.route('/mono-alphabetic')
 @login_required
 def mono_alphabetic():
-    return render_template('pages/mono-alphabetic.html')
+    # Redirect to the aim page when clicking the main card
+    return redirect(url_for('mono_alphabetic_aim'))
 
 @app.route('/one-time-pad')
 @login_required
@@ -125,6 +126,47 @@ def shift_cipher_reference():
 @login_required
 def shift_cipher_feedback():
     return render_template('pages/shift-cipher/feedback.html')
+
+# Add these routes for mono-alphabetic cipher pages
+@app.route('/mono-alphabetic/aim')
+@login_required
+def mono_alphabetic_aim():
+    return render_template('pages/mono-alphabetic/aim.html')
+
+@app.route('/mono-alphabetic/theory')
+@login_required
+def mono_alphabetic_theory():
+    return render_template('pages/mono-alphabetic/theory.html')
+
+@app.route('/mono-alphabetic/objective')
+@login_required
+def mono_alphabetic_objective():
+    return render_template('pages/mono-alphabetic/objective.html')
+
+@app.route('/mono-alphabetic/procedure')
+@login_required
+def mono_alphabetic_procedure():
+    return render_template('pages/mono-alphabetic/procedure.html')
+
+@app.route('/mono-alphabetic/simulation')
+@login_required
+def mono_alphabetic_simulation():
+    return render_template('pages/mono-alphabetic/simulation.html')
+
+@app.route('/mono-alphabetic/assignment')
+@login_required
+def mono_alphabetic_assignment():
+    return render_template('pages/mono-alphabetic/assignment.html')
+
+@app.route('/mono-alphabetic/reference')
+@login_required
+def mono_alphabetic_reference():
+    return render_template('pages/mono-alphabetic/reference.html')
+
+@app.route('/mono-alphabetic/feedback')
+@login_required
+def mono_alphabetic_feedback():
+    return render_template('pages/mono-alphabetic/feedback.html')
 
 if __name__ == '__main__':
     app.run(debug=True) 

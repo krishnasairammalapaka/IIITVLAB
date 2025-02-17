@@ -13,6 +13,29 @@
                 <input type="text" id="plaintext" class="w-full p-2 border rounded-md" 
                        placeholder="Enter text to encrypt">
             </div>
+
+            <!-- Enhanced Visualization Section -->
+            <div class="mt-4 mb-4">
+                <label class="block text-sm font-medium text-gray-700 mb-1">Encryption Visualization:</label>
+                <div class="relative h-48 border rounded-md p-4 bg-gradient-to-b from-gray-50 to-gray-100">
+                    <!-- Linear Alphabet Sequence -->
+                    <div class="flex justify-center">
+                        <div id="alphabet-sequence" class="relative w-full flex flex-col space-y-8">
+                            <!-- Original Alphabet Row -->
+                            <div class="flex justify-center space-x-2">
+                                <div class="text-sm font-medium text-gray-600 w-24">Original:</div>
+                                <div id="original-alphabet" class="flex space-x-3"></div>
+                            </div>
+                            <!-- Encrypted Result Row -->
+                            <div class="flex justify-center space-x-2">
+                                <div class="text-sm font-medium text-gray-600 w-24">Encrypted:</div>
+                                <div id="encrypted-result" class="flex space-x-3"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <div>
                 <label for="shift-key" class="block text-sm font-medium text-gray-700 mb-1">Shift Key (0-25):</label>
                 <input type="number" id="shift-key" class="w-1/4 p-2 border rounded-md" min="0" max="25" value="3">
@@ -94,8 +117,10 @@
     function encrypt() {
         const plaintext = document.getElementById('plaintext').value.toUpperCase();
         const shift = parseInt(document.getElementById('shift-key').value);
+        
         let result = '';
 
+        // First, calculate the complete encrypted result
         for (let i = 0; i < plaintext.length; i++) {
             if (plaintext[i].match(/[A-Z]/)) {
                 const code = ((plaintext.charCodeAt(i) - 65 + shift) % 26) + 65;
@@ -105,7 +130,151 @@
             }
         }
 
-        document.getElementById('encryption-result').textContent = result;
+        // Build the original letter visualization boxes from the plaintext
+        const originalContainer = document.getElementById('original-alphabet');
+        originalContainer.innerHTML = '';
+        for (let i = 0; i < plaintext.length; i++) {
+            let box = document.createElement('div');
+            box.className = 'w-10 h-10 flex items-center justify-center border-2 rounded-md transition-all duration-300 relative text-lg font-semibold';
+            box.textContent = plaintext[i];
+            originalContainer.appendChild(box);
+        }
+
+        // Build the encrypted result visualization boxes
+        const encryptedContainer = document.getElementById('encrypted-result');
+        encryptedContainer.innerHTML = '';
+        for (let i = 0; i < result.length; i++) {
+            let box = document.createElement('div');
+            box.className = 'w-10 h-10 flex items-center justify-center border-2 rounded-md transition-all duration-300 relative text-lg font-semibold';
+            box.textContent = result[i];
+            encryptedContainer.appendChild(box);
+        }
+
+        // Reset all letter styles before starting animation
+        document.querySelectorAll('#original-alphabet > div, #encrypted-result > div').forEach(el => {
+            el.className = 'w-10 h-10 flex items-center justify-center border-2 rounded-md transition-all duration-300 relative text-lg font-semibold';
+            el.style.backgroundColor = '';
+            el.style.borderColor = '#e5e7eb';
+            el.style.color = '#6b7280';
+        });
+
+        // Highlight letters in the original alphabet
+        for (let i = 0; i < plaintext.length; i++) {
+            const char = plaintext[i];
+            if (char.match(/[A-Z]/)) {
+                const originalLetter = document.querySelector(`[data-letter="${char}"]`);
+                if (originalLetter) {
+                    originalLetter.style.backgroundColor = '#dbeafe';
+                    originalLetter.style.borderColor = '#2563eb';
+                    originalLetter.style.color = '#1e40af';
+                }
+            }
+        }
+
+        // Highlight corresponding letters in the shifted alphabet
+        for (let i = 0; i < result.length; i++) {
+            const char = result[i];
+            if (char.match(/[A-Z]/)) {
+                const shiftedLetter = document.querySelector(`[data-shiftedLetter="${char}"]`);
+                if (shiftedLetter) {
+                    shiftedLetter.style.backgroundColor = '#dcfce7';
+                    shiftedLetter.style.borderColor = '#059669';
+                    shiftedLetter.style.color = '#047857';
+                }
+            }
+        }
+
+        // Start sequential animation
+        let currentIndex = 0;
+        function animateNext() {
+            if (currentIndex >= plaintext.length) return;
+
+            const char = plaintext[currentIndex];
+            if (char.match(/[A-Z]/)) {
+                const originalBoxes = document.getElementById('original-alphabet').children;
+                const originalBox = originalBoxes[currentIndex];
+                const encryptedBoxes = document.getElementById('encrypted-result').children;
+                const destinationBox = encryptedBoxes[currentIndex];
+
+                if (originalBox && destinationBox) {
+                    // Highlight active letter being processed
+                    originalBox.style.backgroundColor = '#93c5fd';
+                    originalBox.style.transform = 'scale(1.1)';
+
+                    // Create a jumping element with enhanced animation properties
+                    const jumper = document.createElement('div');
+                    jumper.className = 'fixed bg-blue-500 text-white font-bold rounded-full flex items-center justify-center z-50';
+                    jumper.style.width = '40px';
+                    jumper.style.height = '40px';
+                    jumper.textContent = char;
+
+                    const origRect = originalBox.getBoundingClientRect();
+                    const destRect = destinationBox.getBoundingClientRect();
+                    
+                    jumper.style.left = `${origRect.left}px`;
+                    jumper.style.top = `${origRect.top}px`;
+                    document.body.appendChild(jumper);
+
+                    // Create a connector line from the original letter box to the destination box
+                    const line = document.createElement('div');
+                    line.className = 'line-connector';
+                    const startX = origRect.left + origRect.width / 2;
+                    const startY = origRect.top + origRect.height / 2;
+                    const endX = destRect.left + destRect.width / 2;
+                    const endY = destRect.top + destRect.height / 2;
+                    const dx = endX - startX;
+                    const dy = endY - startY;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+                    const angle = Math.atan2(dy, dx) * (180 / Math.PI);
+                    line.style.position = 'fixed';
+                    line.style.left = `${startX}px`;
+                    line.style.top = `${startY}px`;
+                    line.style.width = `${distance}px`;
+                    line.style.height = '2px';
+                    line.style.backgroundColor = '#6b7280';
+                    line.style.transformOrigin = '0 0';
+                    line.style.transform = `rotate(${angle}deg)`;
+                    document.body.appendChild(line);
+
+                    // Animate the jump with rotation and scaling
+                    setTimeout(() => {
+                        jumper.style.transition = 'all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+                        jumper.style.left = `${destRect.left}px`;
+                        jumper.style.top = `${destRect.top}px`;
+                        jumper.style.transform = 'rotate(360deg) scale(1.2)';
+                        // Fade out the connector line
+                        line.style.transition = 'opacity 0.6s ease-in-out';
+                        line.style.opacity = '0';
+
+                        // Highlight destination and then cleanup
+                        setTimeout(() => {
+                            destinationBox.style.backgroundColor = '#86efac';
+                            destinationBox.style.transform = 'scale(1.1)';
+
+                            setTimeout(() => {
+                                jumper.remove();
+                                line.remove();
+                                originalBox.style.transform = 'scale(1)';
+                                originalBox.style.backgroundColor = '#dbeafe';
+                                destinationBox.style.transform = 'scale(1)';
+                                destinationBox.style.backgroundColor = '#dcfce7';
+                                currentIndex++;
+                                animateNext();
+                            }, 300);
+                        }, 600);
+                    }, 100);
+                } else {
+                    currentIndex++;
+                    animateNext();
+                }
+            } else {
+                currentIndex++;
+                animateNext();
+            }
+        }
+
+        // Start the animation
+        animateNext();
     }
 
     // Generate challenge
@@ -234,8 +403,5 @@
             </div>
         `;
     }
-
-    // Initialize with a challenge
-    generateChallenge();
 </script>
 {% endblock %} 

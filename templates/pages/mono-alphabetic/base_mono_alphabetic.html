@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto">
+    <!-- Navigation Tabs - Shared across all mono-alphabetic cipher pages -->
+    <div class="flex flex-wrap border-b border-gray-200 mb-8">
+        <a href="{{ url_for('mono_alphabetic_aim') }}" 
+           class="px-6 py-3 {% if request.endpoint == 'mono_alphabetic_aim' %}text-blue-600 border-b-2 border-blue-600 font-medium{% else %}text-gray-600 hover:text-blue-600{% endif %}">
+           Aim
+        </a>
+        <a href="{{ url_for('mono_alphabetic_theory') }}" 
+           class="px-6 py-3 {% if request.endpoint == 'mono_alphabetic_theory' %}text-blue-600 border-b-2 border-blue-600 font-medium{% else %}text-gray-600 hover:text-blue-600{% endif %}">
+           Theory
+        </a>
+        <a href="{{ url_for('mono_alphabetic_objective') }}" 
+           class="px-6 py-3 {% if request.endpoint == 'mono_alphabetic_objective' %}text-blue-600 border-b-2 border-blue-600 font-medium{% else %}text-gray-600 hover:text-blue-600{% endif %}">
+           Objective
+        </a>
+        <a href="{{ url_for('mono_alphabetic_procedure') }}" 
+           class="px-6 py-3 {% if request.endpoint == 'mono_alphabetic_procedure' %}text-blue-600 border-b-2 border-blue-600 font-medium{% else %}text-gray-600 hover:text-blue-600{% endif %}">
+           Procedure
+        </a>
+        <a href="{{ url_for('mono_alphabetic_simulation') }}" 
+           class="px-6 py-3 {% if request.endpoint == 'mono_alphabetic_simulation' %}text-blue-600 border-b-2 border-blue-600 font-medium{% else %}text-gray-600 hover:text-blue-600{% endif %}">
+           Simulation
+        </a>
+        <a href="{{ url_for('mono_alphabetic_assignment') }}" 
+           class="px-6 py-3 {% if request.endpoint == 'mono_alphabetic_assignment' %}text-blue-600 border-b-2 border-blue-600 font-medium{% else %}text-gray-600 hover:text-blue-600{% endif %}">
+           Assignment
+        </a>
+        <a href="{{ url_for('mono_alphabetic_reference') }}" 
+           class="px-6 py-3 {% if request.endpoint == 'mono_alphabetic_reference' %}text-blue-600 border-b-2 border-blue-600 font-medium{% else %}text-gray-600 hover:text-blue-600{% endif %}">
+           Reference
+        </a>
+        <a href="{{ url_for('mono_alphabetic_feedback') }}" 
+           class="px-6 py-3 {% if request.endpoint == 'mono_alphabetic_feedback' %}text-blue-600 border-b-2 border-blue-600 font-medium{% else %}text-gray-600 hover:text-blue-600{% endif %}">
+           Feedback
+        </a>
+    </div>
+
+    <!-- Content specific to each page -->
+    <div class="bg-white p-8 rounded-lg shadow-md">
+        {% block mono_alphabetic_content %}{% endblock %}
+    </div>
+</div>
+{% endblock %} 

@@ -1,0 +1,59 @@
+{% extends "pages/mono-alphabetic/base_mono_alphabetic.html" %}
+
+{% block mono_alphabetic_content %}
+<h1 class="text-2xl font-bold text-gray-800 mb-6">Breaking the Mono-alphabetic Substitution Cipher</h1>
+
+<div class="prose max-w-none">
+    <p class="mb-4">
+        The mono-alphabetic substitution cipher is a more complex variant of classical ciphers where each letter 
+        in the plaintext is mapped to a unique letter in the ciphertext. Unlike the shift cipher, which uses a 
+        fixed shift value, the mono-alphabetic substitution cipher uses a complete scrambled alphabet as its key.
+    </p>
+
+    <div class="bg-blue-50 p-6 rounded-lg mb-6">
+        <h2 class="text-xl font-semibold text-blue-800 mb-3">Key Characteristics</h2>
+        <ul class="list-disc pl-6 text-blue-900">
+            <li class="mb-2">26! possible keys (approximately 4 × 10²⁶)</li>
+            <li class="mb-2">Each letter maps to exactly one other letter</li>
+            <li class="mb-2">Preserves letter frequencies</li>
+            <li class="mb-2">Maintains word patterns and letter positions</li>
+        </ul>
+    </div>
+
+    <h2 class="text-xl font-semibold text-gray-800 mt-8 mb-4">Purpose of this Experiment</h2>
+
+    <p class="mb-4">
+        In this experiment, you will learn how to break a mono-alphabetic substitution cipher using:
+    </p>
+
+    <ul class="list-disc pl-6 mb-6">
+        <li class="mb-2">Frequency analysis techniques</li>
+        <li class="mb-2">Pattern recognition methods</li>
+        <li class="mb-2">Common word identification</li>
+        <li class="mb-2">Systematic substitution approaches</li>
+    </ul>
+
+    <div class="bg-yellow-50 p-6 rounded-lg mb-6">
+        <h3 class="text-lg font-semibold text-yellow-800 mb-3">Challenge Level</h3>
+        <p class="text-yellow-900">
+            While more challenging than the shift cipher, the mono-alphabetic substitution cipher is still 
+            vulnerable to cryptanalysis due to the preservation of statistical patterns in the language. 
+            Your task will be to exploit these patterns to recover the plaintext.
+        </p>
+    </div>
+
+    <h2 class="text-xl font-semibold text-gray-800 mt-8 mb-4">Expected Outcomes</h2>
+
+    <p class="mb-4">
+        By the end of this experiment, you will:
+    </p>
+
+    <ul class="list-disc pl-6 mb-6">
+        <li class="mb-2">Understand the structure of mono-alphabetic substitution ciphers</li>
+        <li class="mb-2">Master advanced frequency analysis techniques</li>
+        <li class="mb-2">Learn to identify and exploit language patterns</li>
+        <li class="mb-2">Develop systematic approaches to cryptanalysis</li>
+        <li class="mb-2">Gain practical experience in breaking complex classical ciphers</li>
+    </ul>
+</div>
+{% endblock %} 
