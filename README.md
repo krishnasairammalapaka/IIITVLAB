@@ -30,8 +30,29 @@ An interactive web-based platform designed to teach students about cryptography 
 - Progress tracking
 - Interactive workspace
 
-## Technical Stack
-
+## project flow chart
+breaking-shift-cipher/
+├── app.py # Flask application entry point
+├── templates/
+│ ├── base.html # Base template
+│ ├── index.html # Landing page
+│ └── pages/
+│ └── shift-cipher/
+│ ├── aim.html
+│ ├── theory.html
+│ ├── objective.html
+│ ├── procedure.html
+│ ├── simulation.html
+│ ├── assignment.html
+│ ├── reference.html
+│ ├── feedback.html
+│ └── base_shift_cipher.html
+├── static/
+│ ├── css/
+│ │ └── styles.css
+│ └── js/
+│ └── scripts.js
+└── README.md
 ### Frontend
 - HTML5
 - CSS3 (Tailwind CSS)
