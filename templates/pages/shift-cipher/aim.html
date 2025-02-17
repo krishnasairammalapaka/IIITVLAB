@@ -1,0 +1,50 @@
+{% extends "pages/shift-cipher/base_shift_cipher.html" %}
+
+{% block shift_cipher_content %}
+<h1 class="text-2xl font-bold text-gray-800 mb-6">Breaking the Shift Cipher</h1>
+
+<div class="prose max-w-none">
+    <p class="mb-4">
+        A private-key encryption scheme consists of a set of all possible messages, called the message space M, 
+        and three algorithms, namely:
+    </p>
+    
+    <ul class="list-disc pl-6 mb-6">
+        <li class="mb-2">(a) Gen</li>
+        <li class="mb-2">(b) Enc</li>
+        <li class="mb-2">(c) Dec</li>
+    </ul>
+
+    <p class="mb-4">
+        The algorithm for key generation <span class="font-semibold">Gen</span> is used to choose a key k at 
+        random from the set of all possible secret keys, denoted by the key space K.
+    </p>
+
+    <p class="mb-4">
+        The algorithm for encryption <span class="font-semibold">Enc</span> takes as inputs the message m and 
+        the secret key k and outputs the ciphertext c.
+    </p>
+
+    <p class="mb-4">
+        The algorithm for decryption <span class="font-semibold">Dec</span> inputs the ciphertext c and the 
+        key k and outputs the message m.
+    </p>
+
+    <h2 class="text-xl font-semibold text-gray-800 mt-8 mb-4">About the experiment:</h2>
+
+    <p class="mb-4">
+        Apparently, the system is easily broken if the total number of distinct secret keys is small, that is 
+        the key space K is small.
+    </p>
+
+    <p class="mb-4">
+        In this experiment, we work with a well-known historical encryption scheme, namely the shift cipher, 
+        that has a very small key space.
+    </p>
+
+    <p class="mb-4">
+        Your task is to break the shift cipher. Specifically, given (only) the ciphertext in some instance 
+        of a shift cipher, you need to find the plaintext and the secret key.
+    </p>
+</div>
+{% endblock %} 

@@ -1,0 +1,241 @@
+{% extends "pages/shift-cipher/base_shift_cipher.html" %}
+
+{% block shift_cipher_content %}
+<h1 class="text-2xl font-bold text-gray-800 mb-6">Simulation: Breaking the Shift Cipher</h1>
+
+<div class="prose max-w-none">
+    <!-- Encryption Section -->
+    <div class="bg-white p-6 rounded-lg shadow-md mb-8">
+        <h2 class="text-xl font-semibold text-gray-800 mb-4">Encryption Tool</h2>
+        <div class="space-y-4">
+            <div>
+                <label for="plaintext" class="block text-sm font-medium text-gray-700 mb-1">Enter Plaintext:</label>
+                <input type="text" id="plaintext" class="w-full p-2 border rounded-md" 
+                       placeholder="Enter text to encrypt">
+            </div>
+            <div>
+                <label for="shift-key" class="block text-sm font-medium text-gray-700 mb-1">Shift Key (0-25):</label>
+                <input type="number" id="shift-key" class="w-1/4 p-2 border rounded-md" min="0" max="25" value="3">
+            </div>
+            <button onclick="encrypt()" class="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700">
+                Encrypt
+            </button>
+            <div class="mt-4">
+                <label class="block text-sm font-medium text-gray-700 mb-1">Encrypted Result:</label>
+                <div id="encryption-result" class="p-2 bg-gray-100 rounded-md font-mono"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Decryption Challenge Section -->
+    <div class="bg-white p-6 rounded-lg shadow-md mb-8">
+        <h2 class="text-xl font-semibold text-gray-800 mb-4">Decryption Challenge</h2>
+        <div class="space-y-4">
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Challenge Ciphertext:</label>
+                <div id="challenge-text" class="p-2 bg-gray-100 rounded-md font-mono mb-4"></div>
+                <button onclick="generateChallenge()" class="bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700">
+                    Generate New Challenge
+                </button>
+            </div>
+            
+            <!-- Frequency Analysis Tool -->
+            <div class="mt-4">
+                <h3 class="text-lg font-semibold text-gray-800 mb-2">Frequency Analysis</h3>
+                <div id="frequency-analysis" class="grid grid-cols-6 gap-2 p-2 bg-gray-50 rounded-md">
+                    <!-- Frequency bars will be inserted here -->
+                </div>
+            </div>
+
+            <!-- Solution Input -->
+            <div class="mt-6">
+                <label for="guessed-shift" class="block text-sm font-medium text-gray-700 mb-1">Your Guess (Shift Value):</label>
+                <input type="number" id="guessed-shift" class="w-1/4 p-2 border rounded-md" min="0" max="25">
+                <button onclick="checkAnswer()" class="ml-4 bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700">
+                    Check Answer
+                </button>
+            </div>
+
+            <div id="feedback" class="mt-4 p-4 rounded-md hidden"></div>
+        </div>
+    </div>
+
+    <!-- Interactive Workspace -->
+    <div class="bg-white p-6 rounded-lg shadow-md">
+        <h2 class="text-xl font-semibold text-gray-800 mb-4">Interactive Workspace</h2>
+        <div class="space-y-4">
+            <div>
+                <label for="workspace-input" class="block text-sm font-medium text-gray-700 mb-1">Workspace:</label>
+                <textarea id="workspace-input" class="w-full p-2 border rounded-md h-32" 
+                          placeholder="Use this space for your calculations and notes..."></textarea>
+            </div>
+            <div class="grid grid-cols-2 gap-4">
+                <div>
+                    <h3 class="text-lg font-semibold text-gray-800 mb-2">Quick Tools</h3>
+                    <div class="space-y-2">
+                        <button onclick="showFrequencyTable()" class="w-full bg-gray-200 px-4 py-2 rounded-md hover:bg-gray-300">
+                            Show Letter Frequencies
+                        </button>
+                        <button onclick="tryAllShifts()" class="w-full bg-gray-200 px-4 py-2 rounded-md hover:bg-gray-300">
+                            Try All Shifts
+                        </button>
+                    </div>
+                </div>
+                <div id="tools-output" class="p-2 bg-gray-100 rounded-md">
+                    <!-- Tool output will appear here -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Encryption function
+    function encrypt() {
+        const plaintext = document.getElementById('plaintext').value.toUpperCase();
+        const shift = parseInt(document.getElementById('shift-key').value);
+        let result = '';
+
+        for (let i = 0; i < plaintext.length; i++) {
+            if (plaintext[i].match(/[A-Z]/)) {
+                const code = ((plaintext.charCodeAt(i) - 65 + shift) % 26) + 65;
+                result += String.fromCharCode(code);
+            } else {
+                result += plaintext[i];
+            }
+        }
+
+        document.getElementById('encryption-result').textContent = result;
+    }
+
+    // Generate challenge
+    function generateChallenge() {
+        const phrases = [
+            "THE QUICK BROWN FOX JUMPS OVER THE LAZY DOG",
+            "CRYPTOGRAPHY IS THE PRACTICE OF SECURE COMMUNICATION",
+            "BREAKING CODES REQUIRES PATIENCE AND ANALYSIS",
+            "FREQUENCY ANALYSIS IS A POWERFUL TOOL"
+        ];
+        const randomPhrase = phrases[Math.floor(Math.random() * phrases.length)];
+        const randomShift = Math.floor(Math.random() * 26);
+        
+        // Encrypt the phrase
+        let challenge = '';
+        for (let i = 0; i < randomPhrase.length; i++) {
+            if (randomPhrase[i].match(/[A-Z]/)) {
+                const code = ((randomPhrase.charCodeAt(i) - 65 + randomShift) % 26) + 65;
+                challenge += String.fromCharCode(code);
+            } else {
+                challenge += randomPhrase[i];
+            }
+        }
+
+        document.getElementById('challenge-text').textContent = challenge;
+        updateFrequencyAnalysis(challenge);
+        
+        // Store the shift value for checking
+        document.getElementById('challenge-text').dataset.shift = randomShift;
+    }
+
+    // Update frequency analysis
+    function updateFrequencyAnalysis(text) {
+        const frequencies = new Array(26).fill(0);
+        let total = 0;
+
+        // Count frequencies
+        for (let char of text) {
+            if (char.match(/[A-Z]/)) {
+                frequencies[char.charCodeAt(0) - 65]++;
+                total++;
+            }
+        }
+
+        // Create frequency display
+        const freqDiv = document.getElementById('frequency-analysis');
+        freqDiv.innerHTML = '';
+        
+        for (let i = 0; i < 26; i++) {
+            const percentage = (frequencies[i] / total) * 100;
+            const letter = String.fromCharCode(65 + i);
+            
+            const barContainer = document.createElement('div');
+            barContainer.className = 'text-center';
+            
+            const bar = document.createElement('div');
+            bar.className = 'bg-blue-500 mx-auto w-4';
+            bar.style.height = `${percentage * 3}px`;
+            
+            const label = document.createElement('div');
+            label.className = 'text-xs mt-1';
+            label.textContent = letter;
+
+            barContainer.appendChild(bar);
+            barContainer.appendChild(label);
+            freqDiv.appendChild(barContainer);
+        }
+    }
+
+    // Check answer
+    function checkAnswer() {
+        const guessedShift = parseInt(document.getElementById('guessed-shift').value);
+        const correctShift = parseInt(document.getElementById('challenge-text').dataset.shift);
+        const feedback = document.getElementById('feedback');
+        
+        feedback.classList.remove('hidden', 'bg-green-100', 'bg-red-100', 'text-green-800', 'text-red-800');
+        
+        if (guessedShift === correctShift) {
+            feedback.classList.add('bg-green-100', 'text-green-800');
+            feedback.textContent = "Correct! You have broken the cipher!";
+        } else {
+            feedback.classList.add('bg-red-100', 'text-red-800');
+            feedback.textContent = "Not quite right. Try analyzing the frequency patterns again.";
+        }
+        
+        feedback.classList.remove('hidden');
+    }
+
+    // Show frequency table
+    function showFrequencyTable() {
+        const toolsOutput = document.getElementById('tools-output');
+        toolsOutput.innerHTML = `
+            <div class="text-sm">
+                Common English Letter Frequencies:<br>
+                E: 12.7%<br>
+                T: 9.1%<br>
+                A: 8.2%<br>
+                O: 7.5%<br>
+                I: 7.0%<br>
+                N: 6.7%
+            </div>
+        `;
+    }
+
+    // Try all shifts
+    function tryAllShifts() {
+        const ciphertext = document.getElementById('challenge-text').textContent;
+        let output = '';
+        
+        for (let shift = 0; shift < 26; shift++) {
+            let attempt = '';
+            for (let i = 0; i < ciphertext.length; i++) {
+                if (ciphertext[i].match(/[A-Z]/)) {
+                    const code = ((ciphertext.charCodeAt(i) - 65 - shift + 26) % 26) + 65;
+                    attempt += String.fromCharCode(code);
+                } else {
+                    attempt += ciphertext[i];
+                }
+            }
+            output += `Shift ${shift}: ${attempt}\n`;
+        }
+        
+        document.getElementById('tools-output').innerHTML = `
+            <div class="font-mono text-xs overflow-auto max-h-48">
+                ${output.split('\n').join('<br>')}
+            </div>
+        `;
+    }
+
+    // Initialize with a challenge
+    generateChallenge();
+</script>
+{% endblock %} 

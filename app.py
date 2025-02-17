@@ -35,7 +35,8 @@ def logout():
 @app.route('/shift-cipher')
 @login_required
 def shift_cipher():
-    return render_template('pages/shift-cipher.html')
+    # Redirect to the aim page when clicking the main card
+    return redirect(url_for('shift_cipher_aim'))
 
 @app.route('/mono-alphabetic')
 @login_required
@@ -83,6 +84,47 @@ def digital_signatures():
 @login_required
 def message_auth():
     return render_template('pages/message-auth.html')
+
+# Add these routes for shift cipher pages
+@app.route('/shift-cipher/aim')
+@login_required
+def shift_cipher_aim():
+    return render_template('pages/shift-cipher/aim.html')
+
+@app.route('/shift-cipher/theory')
+@login_required
+def shift_cipher_theory():
+    return render_template('pages/shift-cipher/theory.html')
+
+@app.route('/shift-cipher/objective')
+@login_required
+def shift_cipher_objective():
+    return render_template('pages/shift-cipher/objective.html')
+
+@app.route('/shift-cipher/procedure')
+@login_required
+def shift_cipher_procedure():
+    return render_template('pages/shift-cipher/procedure.html')
+
+@app.route('/shift-cipher/simulation')
+@login_required
+def shift_cipher_simulation():
+    return render_template('pages/shift-cipher/simulation.html')
+
+@app.route('/shift-cipher/assignment')
+@login_required
+def shift_cipher_assignment():
+    return render_template('pages/shift-cipher/assignment.html')
+
+@app.route('/shift-cipher/reference')
+@login_required
+def shift_cipher_reference():
+    return render_template('pages/shift-cipher/reference.html')
+
+@app.route('/shift-cipher/feedback')
+@login_required
+def shift_cipher_feedback():
+    return render_template('pages/shift-cipher/feedback.html')
 
 if __name__ == '__main__':
     app.run(debug=True) 
