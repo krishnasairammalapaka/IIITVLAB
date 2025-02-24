@@ -1,56 +1,201 @@
 {% extends "base.html" %}
 
+{% block head %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+{% endblock %}
+
 {% block content %}
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-    <!-- Grid Items -->
-    <a href="{{ url_for('shift_cipher_aim') }}" class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition duration-300 card-hover-effect">
-        <h2 class="text-lg font-semibold text-gray-800 mb-2">Breaking the Shift Cipher</h2>
-        <p class="text-gray-600 text-sm">Learn about breaking classical shift ciphers</p>
-    </a>
+<div class="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50 dark:from-gray-800 dark:to-blue-900">
+    <!-- Main Content -->
+    <div class="container mx-auto px-4 py-8">
+        <div class="text-center mb-12">
+            <h2 class="text-4xl font-bold text-gray-800 dark:text-white mb-4">Cryptographic Algorithms</h2>
+            <p class="text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+                Explore various cryptographic techniques through interactive simulations and hands-on experiments.
+            </p>
+        </div>
 
-    <a href="{{ url_for('mono_alphabetic.index') }}" class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition duration-300 card-hover-effect">
-        <h2 class="text-lg font-semibold text-gray-800 mb-2">Breaking the Mono-alphabetic Substitution Cipher</h2>
-        <p class="text-gray-600 text-sm">Explore mono-alphabetic substitution techniques</p>
-    </a>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Mono Alphabetic Cipher -->
+            <div class="group">
+                <a href="{{ url_for('mono_alphabetic.home') }}" 
+                   class="block bg-white dark:bg-gray-800 rounded-xl shadow-lg hover:shadow-2xl transition duration-300 transform hover:-translate-y-2">
+                    <div class="p-6">
+                        <div class="w-16 h-16 bg-blue-100 dark:bg-blue-900 rounded-full flex items-center justify-center mb-6 group-hover:bg-blue-200 dark:group-hover:bg-blue-800 transition duration-300">
+                            <svg class="w-8 h-8 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 19v-8.93a2 2 0 01.89-1.664l7-4.666a2 2 0 012.22 0l7 4.666A2 2 0 0121 10.07V19M3 19a2 2 0 002 2h14a2 2 0 002-2M3 19l6.75-4.5M21 19l-6.75-4.5M3 10l6.75 4.5M21 10l-6.75 4.5m0 0l-1.14.76a2 2 0 01-2.22 0l-1.14-.76"/>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-semibold text-gray-800 dark:text-white mb-3">Mono Alphabetic Cipher</h3>
+                        <p class="text-gray-600 dark:text-gray-300 mb-4">Learn about simple substitution ciphers where each letter is replaced by another letter.</p>
+                        <div class="flex items-center text-blue-600 group-hover:text-blue-700">
+                            <span>Start Learning</span>
+                            <svg class="w-5 h-5 ml-2 transform group-hover:translate-x-1 transition duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                            </svg>
+                        </div>
+                    </div>
+                </a>
+            </div>
 
-    <a href="{{ url_for('one_time_pad') }}" class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition duration-300 card-hover-effect">
-        <h2 class="text-lg font-semibold text-gray-800 mb-2">One-Time Pad and Perfect Secrecy</h2>
-        <p class="text-gray-600 text-sm">Understand perfect secrecy with one-time pads</p>
-    </a>
+            <!-- Shift Cipher -->
+            <div class="group">
+                <a href="{{ url_for('shift_cipher.home') }}" 
+                   class="block bg-white dark:bg-gray-800 rounded-xl shadow-lg hover:shadow-2xl transition duration-300 transform hover:-translate-y-2">
+                    <div class="p-6">
+                        <div class="w-16 h-16 bg-green-100 dark:bg-green-900 rounded-full flex items-center justify-center mb-6 group-hover:bg-green-200 dark:group-hover:bg-green-800 transition duration-300">
+                            <svg class="w-8 h-8 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"/>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-semibold text-gray-800 dark:text-white mb-3">Shift Cipher</h3>
+                        <p class="text-gray-600 dark:text-gray-300 mb-4">Explore the classic Caesar cipher and its variations in cryptography.</p>
+                        <div class="flex items-center text-green-600 group-hover:text-green-700">
+                            <span>Start Learning</span>
+                            <svg class="w-5 h-5 ml-2 transform group-hover:translate-x-1 transition duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                            </svg>
+                        </div>
+                    </div>
+                </a>
+            </div>
 
-    <a href="{{ url_for('message_auth') }}" class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition duration-300 card-hover-effect">
-        <h2 class="text-lg font-semibold text-gray-800 mb-2">Message Authentication Codes</h2>
-        <p class="text-gray-600 text-sm">Learn about message authentication and integrity</p>
-    </a>
+            <!-- Other ciphers - temporarily disabled -->
+            <div class="group opacity-50 cursor-not-allowed">
+                <div class="block bg-white dark:bg-gray-800 rounded-xl shadow-lg">
+                    <div class="p-6">
+                        <div class="w-16 h-16 bg-purple-100 dark:bg-purple-900 rounded-full flex items-center justify-center mb-6">
+                            <svg class="w-8 h-8 text-purple-600 dark:text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8V7a4 4 0 00-8 0v4h8z"/>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-semibold text-gray-800 dark:text-white mb-3">One Time Pad</h3>
+                        <p class="text-gray-600 dark:text-gray-300 mb-4">Coming Soon</p>
+                    </div>
+                </div>
+            </div>
 
-    <a href="{{ url_for('hash_functions') }}" class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition duration-300 card-hover-effect">
-        <h2 class="text-lg font-semibold text-gray-800 mb-2">Cryptographic Hash Functions</h2>
-        <p class="text-gray-600 text-sm">Explore hash functions and their applications</p>
-    </a>
+            <!-- Add more disabled cards for other ciphers -->
+            <div class="group opacity-50 cursor-not-allowed">
+                <div class="block bg-white dark:bg-gray-800 rounded-xl shadow-lg">
+                    <div class="p-6">
+                        <div class="w-16 h-16 bg-red-100 dark:bg-red-900 rounded-full flex items-center justify-center mb-6">
+                            <svg class="w-8 h-8 text-red-600 dark:text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-semibold text-gray-800 dark:text-white mb-3">Hash Functions</h3>
+                        <p class="text-gray-600 dark:text-gray-300 mb-4">Coming Soon</p>
+                    </div>
+                </div>
+            </div>
 
-    <a href="{{ url_for('des') }}" class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition duration-300 card-hover-effect">
-        <h2 class="text-lg font-semibold text-gray-800 mb-2">Symmetric Key Encryption (DES)</h2>
-        <p class="text-gray-600 text-sm">Study the Data Encryption Standard</p>
-    </a>
+            <!-- DES -->
+            <div class="group opacity-50 cursor-not-allowed">
+                <div class="block bg-white dark:bg-gray-800 rounded-xl shadow-lg">
+                    <div class="p-6">
+                        <div class="w-16 h-16 bg-yellow-100 dark:bg-yellow-900 rounded-full flex items-center justify-center mb-6">
+                            <svg class="w-8 h-8 text-yellow-600 dark:text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 11V7a4 4 0 118 0m-4 8v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2z"/>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-semibold text-gray-800 dark:text-white mb-3">DES Algorithm</h3>
+                        <p class="text-gray-600 dark:text-gray-300 mb-4">Coming Soon</p>
+                    </div>
+                </div>
+            </div>
 
-    <a href="{{ url_for('aes') }}" class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition duration-300 card-hover-effect">
-        <h2 class="text-lg font-semibold text-gray-800 mb-2">Symmetric Key Encryption (AES)</h2>
-        <p class="text-gray-600 text-sm">Learn about Advanced Encryption Standard</p>
-    </a>
+            <!-- AES -->
+            <div class="group opacity-50 cursor-not-allowed">
+                <div class="block bg-white dark:bg-gray-800 rounded-xl shadow-lg">
+                    <div class="p-6">
+                        <div class="w-16 h-16 bg-indigo-100 dark:bg-indigo-900 rounded-full flex items-center justify-center mb-6">
+                            <svg class="w-8 h-8 text-indigo-600 dark:text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8V7a4 4 0 00-8 0v4h8z"/>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-semibold text-gray-800 dark:text-white mb-3">AES Algorithm</h3>
+                        <p class="text-gray-600 dark:text-gray-300 mb-4">Coming Soon</p>
+                    </div>
+                </div>
+            </div>
 
-    <a href="{{ url_for('diffie_hellman') }}" class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition duration-300 card-hover-effect">
-        <h2 class="text-lg font-semibold text-gray-800 mb-2">Diffie-Hellman Key Establishment</h2>
-        <p class="text-gray-600 text-sm">Understand secure key exchange protocols</p>
-    </a>
+            <!-- Public Key -->
+            <div class="group opacity-50 cursor-not-allowed">
+                <div class="block bg-white dark:bg-gray-800 rounded-xl shadow-lg">
+                    <div class="p-6">
+                        <div class="w-16 h-16 bg-pink-100 dark:bg-pink-900 rounded-full flex items-center justify-center mb-6">
+                            <svg class="w-8 h-8 text-pink-600 dark:text-pink-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z"/>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-semibold text-gray-800 dark:text-white mb-3">Public Key Cryptography</h3>
+                        <p class="text-gray-600 dark:text-gray-300 mb-4">Coming Soon</p>
+                    </div>
+                </div>
+            </div>
 
-    <a href="{{ url_for('public_key') }}" class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition duration-300 card-hover-effect">
-        <h2 class="text-lg font-semibold text-gray-800 mb-2">Public-Key Cryptosystems</h2>
-        <p class="text-gray-600 text-sm">Explore PKCSv1.5 and asymmetric encryption</p>
-    </a>
+            <!-- Digital Signatures -->
+            <div class="group opacity-50 cursor-not-allowed">
+                <div class="block bg-white dark:bg-gray-800 rounded-xl shadow-lg">
+                    <div class="p-6">
+                        <div class="w-16 h-16 bg-teal-100 dark:bg-teal-900 rounded-full flex items-center justify-center mb-6">
+                            <svg class="w-8 h-8 text-teal-600 dark:text-teal-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-semibold text-gray-800 dark:text-white mb-3">Digital Signatures</h3>
+                        <p class="text-gray-600 dark:text-gray-300 mb-4">Coming Soon</p>
+                    </div>
+                </div>
+            </div>
 
-    <a href="{{ url_for('digital_signatures') }}" class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition duration-300 card-hover-effect">
-        <h2 class="text-lg font-semibold text-gray-800 mb-2">Digital Signatures</h2>
-        <p class="text-gray-600 text-sm">Learn about digital signature algorithms and verification</p>
-    </a>
+            <!-- Message Authentication -->
+            <div class="group opacity-50 cursor-not-allowed">
+                <div class="block bg-white dark:bg-gray-800 rounded-xl shadow-lg">
+                    <div class="p-6">
+                        <div class="w-16 h-16 bg-orange-100 dark:bg-orange-900 rounded-full flex items-center justify-center mb-6">
+                            <svg class="w-8 h-8 text-orange-600 dark:text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-semibold text-gray-800 dark:text-white mb-3">Message Authentication</h3>
+                        <p class="text-gray-600 dark:text-gray-300 mb-4">Coming Soon</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-white dark:bg-gray-800 mt-16 border-t border-gray-200 dark:border-gray-700">
+        <div class="container mx-auto px-4 py-8">
+            <div class="text-center">
+                <p class="text-gray-600 dark:text-gray-300">© 2024 Cryptography Virtual Lab. All rights reserved.</p>
+                <div class="mt-4 space-x-4">
+                    <a href="#" class="text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200">About</a>
+                    <a href="#" class="text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200">Help</a>
+                    <a href="#" class="text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200">Contact</a>
+                </div>
+            </div>
+        </div>
+    </footer>
 </div>
+
+<!-- Add JavaScript for dropdown functionality -->
+<script>
+    const userMenuButton = document.getElementById('user-menu-button');
+    const userMenuDropdown = document.getElementById('user-menu-dropdown');
+
+    userMenuButton.addEventListener('click', () => {
+        userMenuDropdown.classList.toggle('hidden');
+    });
+
+    // Close dropdown when clicking outside
+    document.addEventListener('click', (event) => {
+        if (!userMenuButton.contains(event.target)) {
+            userMenuDropdown.classList.add('hidden');
+        }
+    });
+</script>
 {% endblock %} 

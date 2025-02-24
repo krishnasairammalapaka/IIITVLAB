@@ -1,61 +1,49 @@
 from flask import Blueprint, render_template
-from functools import wraps
-from flask import session, redirect, url_for
+from auth import login_required
 
-# Create blueprint with a unique name
-mono_alphabetic_bp = Blueprint('mono_alphabetic', __name__)
+mono_alphabetic = Blueprint('mono_alphabetic', __name__)
 
-# Login required decorator
-def login_required(f):
-    @wraps(f)
-    def decorated_function(*args, **kwargs):
-        if 'user' not in session:
-            return redirect(url_for('login'))
-        return f(*args, **kwargs)
-    return decorated_function
-
-@mono_alphabetic_bp.route('/mono-alphabetic')
+@mono_alphabetic.route('/mono-alphabetic')
 @login_required
-def index():
-    # Redirect to the aim page when clicking the main card
-    return redirect(url_for('mono_alphabetic.aim'))
+def home():
+    return render_template('pages/mono-alphabetic/aim.html', active_page='aim')
 
-@mono_alphabetic_bp.route('/mono-alphabetic/aim')
+@mono_alphabetic.route('/mono-alphabetic/aim')
 @login_required
 def aim():
-    return render_template('pages/mono-alphabetic/aim.html')
+    return render_template('pages/mono-alphabetic/aim.html', active_page='aim')
 
-@mono_alphabetic_bp.route('/mono-alphabetic/theory')
+@mono_alphabetic.route('/mono-alphabetic/theory')
 @login_required
 def theory():
-    return render_template('pages/mono-alphabetic/theory.html')
+    return render_template('pages/mono-alphabetic/theory.html', active_page='theory')
 
-@mono_alphabetic_bp.route('/mono-alphabetic/objective')
+@mono_alphabetic.route('/mono-alphabetic/objective')
 @login_required
 def objective():
-    return render_template('pages/mono-alphabetic/objective.html')
+    return render_template('pages/mono-alphabetic/objective.html', active_page='objective')
 
-@mono_alphabetic_bp.route('/mono-alphabetic/procedure')
+@mono_alphabetic.route('/mono-alphabetic/procedure')
 @login_required
 def procedure():
-    return render_template('pages/mono-alphabetic/procedure.html')
+    return render_template('pages/mono-alphabetic/procedure.html', active_page='procedure')
 
-@mono_alphabetic_bp.route('/mono-alphabetic/simulation')
+@mono_alphabetic.route('/mono-alphabetic/simulation')
 @login_required
 def simulation():
-    return render_template('pages/mono-alphabetic/simulation.html')
+    return render_template('pages/mono-alphabetic/simulation.html', active_page='simulation')
 
-@mono_alphabetic_bp.route('/mono-alphabetic/assignment')
+@mono_alphabetic.route('/mono-alphabetic/assignment')
 @login_required
 def assignment():
-    return render_template('pages/mono-alphabetic/assignment.html')
+    return render_template('pages/mono-alphabetic/assignment.html', active_page='assignment')
 
-@mono_alphabetic_bp.route('/mono-alphabetic/reference')
+@mono_alphabetic.route('/mono-alphabetic/reference')
 @login_required
 def reference():
-    return render_template('pages/mono-alphabetic/reference.html')
+    return render_template('pages/mono-alphabetic/reference.html', active_page='reference')
 
-@mono_alphabetic_bp.route('/mono-alphabetic/feedback')
+@mono_alphabetic.route('/mono-alphabetic/feedback')
 @login_required
 def feedback():
-    return render_template('pages/mono-alphabetic/feedback.html') 
+    return render_template('pages/mono-alphabetic/feedback.html', active_page='feedback') 
